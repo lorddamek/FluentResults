@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace FluentResults
@@ -27,15 +26,33 @@ namespace FluentResults
             Reasons.Add(reason);
             return (TResult)this;
         }
+        public TResult WithReason(List<Reason> reasons)
+        {
+            Reasons.AddRange(reasons);
+            return (TResult)this;
+        }
+        public TResult WithReason(List<Error> reasons)
+        {
+            Reasons.AddRange(reasons);
+            return (TResult)this;
+        }
+        public TResult WithReason(List<Success> reasons)
+        {
+            Reasons.AddRange(reasons);
+            return (TResult)this;
+        }
 
         public TResult WithError(string errorMessage)
         {
             return WithError(new Error(errorMessage));
         }
-
         public TResult WithError(Error error)
         {
             return WithReason(error);
+        }
+        public TResult WithError(List<Error> errors)
+        {
+            return WithReason(errors);
         }
 
         public TResult WithError<TError>()
@@ -48,12 +65,14 @@ namespace FluentResults
         {
             return WithSuccess(new Success(successMessage));
         }
-
         public TResult WithSuccess(Success success)
         {
             return WithReason(success);
         }
-
+        public TResult WithSuccess(List<Success> success)
+        {
+            return WithReason(success);
+        }
         public TResult WithSuccess<TSuccess>()
             where TSuccess : Success, new()
         {
@@ -64,6 +83,9 @@ namespace FluentResults
         {
             return ResultHelper.Merge<Result<TNewValue>>(this);
         }
+
+        public TResult Join(ResultBase newResult)
+            => WithReason(newResult.Reasons);
 
         public TResult Log()
         {

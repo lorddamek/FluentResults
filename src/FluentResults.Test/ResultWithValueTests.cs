@@ -21,7 +21,7 @@ namespace FluentResults.Test
             okResult.Errors.Should().BeEmpty();
             okResult.Successes.Should().BeEmpty();
             okResult.Value.Should().Be(0);
-            okResult.ValueOrDefault.Should().Be(0);
+            okResult.Value.Should().Be(0);
         }
 
         [TestMethod]
@@ -33,7 +33,7 @@ namespace FluentResults.Test
             // Assert
             okResult.IsSuccess.Should().BeTrue();
             okResult.Value.Should().Be(5);
-            okResult.ValueOrDefault.Should().Be(5);
+            okResult.Value.Should().Be(5);
         }
 
         [TestMethod]
@@ -46,7 +46,7 @@ namespace FluentResults.Test
 
             // Assert
             okResult.Value.Should().Be(5);
-            okResult.ValueOrDefault.Should().Be(5);
+            okResult.Value.Should().Be(5);
         }
 
         [TestMethod]
@@ -57,7 +57,7 @@ namespace FluentResults.Test
 
             // Assert
             result.IsFailed.Should().BeTrue();
-            result.ValueOrDefault.Should().Be(0);
+            result.Value.Should().Be(0);
         }
 
         [TestMethod]
@@ -66,7 +66,7 @@ namespace FluentResults.Test
             var result = Results.Fail<DateTime>("Error message");
 
             // Act
-            var valueOrDefault = result.ValueOrDefault;
+            var valueOrDefault = result.Value;
 
             // Assert
             var defaultDateTime = default(DateTime);
@@ -84,7 +84,7 @@ namespace FluentResults.Test
             var result = Results.Fail<TestValue>("Error message");
 
             // Act
-            var valueOrDefault = result.ValueOrDefault;
+            var valueOrDefault = result.Value;
 
             // Assert
             valueOrDefault.Should().Be(null);
